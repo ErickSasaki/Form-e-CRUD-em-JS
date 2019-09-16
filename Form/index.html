@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <title>Form</title>
+  </head>
+  <body>
+    <header>
+      <h1>Form</h1>
+    </header>
+    <div class="container">
+      
+      <div class="form-wrapper">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="inputNome">Nome</label>
+              <input class="form-control" id="inputNome" onfocusout="validaNome(this, 0)">
+              <div class="invalid-feedback nomeFeedback"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="inputSobrenome">Sobrenome</label>
+              <input class="form-control" id="inputSobrenome" onfocusout="validaNome(this, 1)">
+              <div class="invalid-feedback nomeFeedback"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="inputEmail">Email</label>
+              <input class="form-control" id="inputEmail">
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label for="inputCpf">CPF/CNPJ</label>
+            <input class="form-control" id="inputCpf" placeholder="123456789-10" onfocusout="validaCpf(this)">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="inputTelefone">Telefone</label>
+              <input class="form-control" id="inputTelefone" maxlength="10" onfocusout="validaTelefone(this)">
+              <div id="telefoneFeedback" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="inputCelular">Celular</label>
+              <input class="form-control" id="inputCelular" maxlength="8">
+              <div id="celularFeedback" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="inputCep">Cep</label>
+              <input class="form-control" id="inputCep" maxlength="8" onkeyup="pegaEndereco(this)" placeholder="ex: 12345678">
+              <div id="cepFeedback" class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-10">
+            <label for="inputRua">Rua</label>
+            <input class="form-control" id="inputRua" readonly>
+          </div>
+          <div class="col-md-2">
+            <label for="inputNumero">Número</label>
+            <input class="form-control" id="inputNumero">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-5">
+            <label for="inputBairro">Bairro</label>
+            <input class="form-control" id="inputBairro" readonly>
+          </div>
+          <div class="col-md-5">
+            <label for="inputCidade">Cidade</label>
+            <input class="form-control" id="inputCidade" readonly>
+          </div>
+          <div class="col-md-2">
+            <label for="inputUf">UF</label>
+            <input class="form-control" id="inputUf" readonly>
+          </div>
+        </div>
+        <div class="row divButton">
+          <div class="col-sm-4">
+            <button type="button" id="btnExcluir" class="btn btn-danger btn-block" onclick="salvar()">Excluir</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" id="btnEditar" class="btn btn-primary btn-block">Editar</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" id="btnSalvar" class="btn btn-success btn-block">Salvar</button>
+          </div>
+        </div>
+        <div class="row divTable">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Email</th>
+                <th>CPF</th>
+                <th>CEP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01</td>
+                <td>Erick</td>
+                <td>Batista</td>
+                <td>erick@yahoo.com</td>
+                <td>46723422805</td>
+                <td>18055860</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <footer>
+        <p>&copy;Erick Batista - 2019</p>
+      </footer>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="js/script.js"></script>
+  </body>
+</html>
