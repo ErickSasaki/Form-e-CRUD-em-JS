@@ -22,14 +22,14 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="inputNome">Nome</label>
-              <input class="form-control" id="inputNome" onfocusout="validaNome(this, 0)">
+              <input class="form-control" id="inputNome" onkeyup="nomeReplace(this)" onblur="validaNome(this, 0)">
               <div class="invalid-feedback nomeFeedback"></div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="inputSobrenome">Sobrenome</label>
-              <input class="form-control" id="inputSobrenome" onfocusout="validaNome(this, 1)">
+              <input class="form-control" id="inputSobrenome" onblur="validaNome(this, 1)">
               <div class="invalid-feedback nomeFeedback"></div>
             </div>
           </div>
@@ -43,28 +43,28 @@
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
-            <input class="form-control" id="inputCpf" placeholder="123456789-10" onfocusout="validaCpf(this)">
+            <input class="form-control" id="inputCpf" placeholder="123456789-10" onblur="validaCpf(this)">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputTelefone">Telefone</label>
-              <input class="form-control" id="inputTelefone" maxlength="10" onfocusout="validaTelefone(this)">
-              <div id="telefoneFeedback" class="invalid-feedback"></div>
+              <input class="form-control" id="inputTelefone" maxlength="13" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, event, 4)" onblur="validaTelefone(this, 0)">
+              <div class="invalid-feedback telefoneFeedback"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputCelular">Celular</label>
-              <input class="form-control" id="inputCelular" maxlength="8">
-              <div id="celularFeedback" class="invalid-feedback"></div>
+              <input class="form-control" id="inputCelular" maxlength="14" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, event, 5)" onblur="validaTelefone(this, 1)">
+              <div class="invalid-feedback telefoneFeedback"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputCep">Cep</label>
-              <input class="form-control" id="inputCep" maxlength="8" onkeyup="pegaEndereco(this)" placeholder="ex: 12345678">
+              <input class="form-control" id="inputCep" maxlength="9" onkeyup="pegaEndereco(this)" onblur="" placeholder="ex: 12345-678">
               <div id="cepFeedback" class="invalid-feedback"></div>
             </div>
           </div>
