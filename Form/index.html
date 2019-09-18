@@ -38,12 +38,13 @@
           <div class="col-md-7">
             <div class="form-group">
               <label for="inputEmail">Email</label>
-              <input class="form-control" id="inputEmail">
+              <input class="form-control" id="inputEmail" onblur="validaEmail(this)">
+              <div id="emailFeedback" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
-            <input class="form-control" id="inputCpf" placeholder="123456789-10" onblur="validaCpf(this)">
+            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123456789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this)" onblur="validaCpf(this)">
           </div>
         </div>
         <div class="row">
@@ -64,7 +65,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputCep">Cep</label>
-              <input class="form-control" id="inputCep" maxlength="9" onkeyup="pegaEndereco(this)" onblur="" placeholder="ex: 12345-678">
+              <input class="form-control" id="inputCep" maxlength="9" onkeypress="mascaraCep(this)" onkeyup="pegaEndereco(this)" onblur="cepInvalido(this)" placeholder="ex: 12345-678">
               <div id="cepFeedback" class="invalid-feedback"></div>
             </div>
           </div>

@@ -6,9 +6,6 @@ function pegaEndereco(inputCep){
 		inputCep.value = inputCep.value.replace(/[^\d-]/g, "");
 	}
 
-
-	inputCep.value = inputCep.value.replace(/^(\d{5})$/, "$1-");
-
 	if(validaCep(inputCep)){
 		var httpCep = new XMLHttpRequest();
 		httpCep.open("GET", `https://viacep.com.br/ws/${valorCep}/json`, true);
@@ -32,8 +29,18 @@ function pegaEndereco(inputCep){
 	}
 }
 
-function cepInvalido(input){
+function mascaraCep(input){
+	input.value = input.value.replace(/^(\d{5})$/, "$1-");
+}
 
+function cepInvalido(input){
+	let padraoCep = /\d{5}-\d{3}/;
+
+	if(!validaInput(input, padraoCep)){
+		inputCep.classList.add("is-invalid");
+		cepFeedback.innerText = "Cep vazio ou incompleto!";
+		limpaInput();
+	}
 }
 
 //pega os dados, transforma em objeto e popula os inputs de endereço
@@ -75,6 +82,39 @@ function validaNome(input, feedback){
 
 function nomeReplace(input){
 	input.value = input.value.replace(/[^a-zà-ú ]/gi, "");
+}
+
+function validaEmail(input){
+	let padraoEmail = /^[^\W-_](\w|\.(?!\.))*@\w+\.(?!\.)(\w|\.(?!\.))*[^\W-_]$/;
+
+	if(validaInput(input, padraoEmail)){
+		input.classList.remove("is-invalid");
+	} else {
+		input.classList.add("is-invalid");
+		document.getElementById("emailFeedback").innerText = "Email está vazio ou não corresponde ao formato de email";
+	}
+}
+
+function mascaraCpf(input){
+	let valor = input.value;
+	
+	//mascara CPF / CNPJ
+	if(valor.length < 11){
+		valor = valor.replace(/(\d{3})(?!\.)/g, "$1.");
+	} else if (valor.length < 14){
+		valor = valor.replace(/(\d{3})$/, "$1-");
+	} else if (valor.length == 14) {
+		let cnpj = valor.replace(/[\.-]/g, "");
+		valor = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3/$4");
+	} else {
+		valor = valor.replace(/(\/\d{4})(?!-)/, "$1-")
+	}
+
+	input.value = valor;
+}
+
+function replaceCpf(input){
+	input.value = input.value.replace(/[^\d-/\.]/g, "");
 }
 
 function validaCpf(input){
@@ -128,9 +168,8 @@ function validaInput(input, padrao){
 
 
 function salvar(){
-	console.log(inputNome.maxLength);
+	
 }
 
 localStorage.clear();
 //localStorage.setItem(("id"+localStorage.length), "ruatop");
-console.log(localStorage);
