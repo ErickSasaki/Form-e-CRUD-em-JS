@@ -227,15 +227,87 @@ function verificaInputs(){
 	return ok;
 }
 
+//apaga toda a tabela, e coloca de volta voltando os dados armazenados.
+function atualizaTabela(){
+	let listaDados = document.getElementById("listaDados");
+	listaDados.innerHTML = "";
+	for(i = 0; i < localStorage.length; i++){
+		let dados = JSON.parse(localStorage.getItem(`ID ${i}`));
 
-localStorage.clear();
+		const tr = document.createElement("tr");
+		listaDados.appendChild(tr);
+
+		tr.classList.add("linha");
+		tr.addEventListener("click", function(){
+			todasLinhas = document.getElementsByClassName("linha");
+			for(let i = 0; i < todasLinhas.length; i++){
+				todasLinhas[i].classList.remove("table-primary");
+			}
+			tr.classList.add("table-primary");
+		});
+
+		if(dados != null){
+			criaTd(dados.ID, tr);
+			criaTd(dados.nome, tr);
+			criaTd(dados.sobrenome, tr);
+			criaTd(dados.email, tr);
+			criaTd(dados.cpf, tr);
+			criaTd(dados.telefone, tr);
+			criaTd(dados.celular, tr);
+			criaTd(dados.cep, tr);
+			criaTd(dados.numero, tr);
+		}
+		
+	}
+}
+
+//cria td da tabela e insere o texto nela
+function criaTd(text, tr){
+	let td = document.createElement("td");
+	tr.appendChild(td);
+	td.innerText = text;
+}
+
+function excluir(){
+	let linhaSelecionada = document.getElementsByClassName("table-primary");
+
+	colunas = linhaSelecionada[0].children;
+
+	id = colunas[0].innerText;
+	localStorage.setItem(`ID ${id}`, "null");
+	console.log(localStorage);
+
+	atualizaTabela();
+}
+
+var editando = false;
+function editar(){
+	let linhaSelecionada = document.getElementsByClassName("table-primary");
+	colunas = linhaSelecionada[0].children;
+	const inputs = document.getElementsByTagName("input");
+
+	for(i = 0; i < 7; i++){
+		inputs[i].value = colunas[i+1].innerText;
+	}
+	inputs[8].value = colunas[8].innerText;
+	pegaEndereco(inputs[6]);
+	editando = true;
+}
 
 //salva os dados no localStorage
 function salvar(){
-	if(verificaInputs()){
+	//if(verificaInputs()){
 		console.log("Nice!");
+		let ID;
 
-		let ID = localStorage.length;
+		if(editando == true){
+			let linha = document.getElementsByClassName("table-primary");
+			ID = linha[0].children[0].innerText;
+			console.log(ID);
+		} else {
+			ID = localStorage.length;
+		}
+		
 		const inputs = document.getElementsByTagName("input");
 
 		let dados = {
@@ -255,6 +327,15 @@ function salvar(){
 		};
 		
 		localStorage.setItem(`ID ${ID}`, JSON.stringify(dados));
-		console.log(localStorage);
-	}
+
+		for(i in inputs){
+			inputs[i].value = "";
+		}
+
+		atualizaTabela();
+	//}
+}
+
+window.onload = function() {
+	atualizaTabela();
 }
