@@ -36,7 +36,9 @@ function mascaraCep(input){
 function cepInvalido(input){
 	let padraoCep = /\d{5}-\d{3}/;
 
-	if(!validaInput(input, padraoCep)){
+	if(validaInput(input, padraoCep)){
+		return true;
+	} else {
 		inputCep.classList.add("is-invalid");
 		cepFeedback.innerText = "Cep vazio ou incompleto!";
 		limpaInput();
@@ -74,6 +76,7 @@ function validaNome(input, feedback){
 
 	if(validaInput(input, padraoNome)){
 		input.classList.remove("is-invalid");
+		return true;
 	} else {
 		input.classList.add("is-invalid");
 		nomeFeedback[feedback].innerText = "Nome está vazio ou contém caracteres especiais";
@@ -89,6 +92,7 @@ function validaEmail(input){
 
 	if(validaInput(input, padraoEmail)){
 		input.classList.remove("is-invalid");
+		return true;
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementById("emailFeedback").innerText = "Email está vazio ou não corresponde ao formato de email";
@@ -99,16 +103,16 @@ function mascaraCpf(input){
 	let valor = input.value;
 	
 	//mascara CPF / CNPJ
-	if(valor.length < 11){
-		valor = valor.replace(/(\d{3})(?!\.)/g, "$1.");
-	} else if (valor.length < 14){
-		valor = valor.replace(/(\d{3})$/, "$1-");
-	} else if (valor.length == 14) {
+	if(valor.length < 14){
+		valor = valor.replace(/^(\d{3})(?!\.)/, "$1.");
+		valor = valor.replace(/^(\d{3})\.(\d{3})(?!\.)/, "$1.$2.");
+		valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(?!\-)/, "$1.$2.$3-");
+	} else if (valor.length == 14){
 		let cnpj = valor.replace(/[\.-]/g, "");
-		valor = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3/$4");
-	} else {
-		valor = valor.replace(/(\/\d{4})(?!-)/, "$1-")
-	}
+		valor = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(?!\/)/, "$1.$2.$3/");
+	} else{
+		valor = valor.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(?!-)/, "$1.$2.$3/$4-");
+	} 
 
 	input.value = valor;
 }
@@ -118,7 +122,19 @@ function replaceCpf(input){
 }
 
 function validaCpf(input){
-	
+	let padraoCpfCnpj;
+	if(input.value.length <= 14){
+		padraoCpfCnpj = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
+	} else {
+		padraoCpfCnpj = /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/;
+	}
+	if(validaInput(input, padraoCpfCnpj)){
+		input.classList.remove("is-invalid");
+		return true;
+	} else {
+		input.classList.add("is-invalid");
+		document.getElementById("cpfFeedback").innerText = "CPF/CNPJ está vazio ou incompleto!";
+	}
 }
 
 //Telefone
@@ -147,16 +163,26 @@ function validaTelefone(input, feedback){
 
 	if(validaInput(input, padraoTelefone)){
 		input.classList.remove("is-invalid");
+		return true;
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementsByClassName("telefoneFeedback")[feedback].innerText = "Telefone está vazio ou incompleto!";
 	}
 }
 
-function validaCelular(input){
-
+function numeroReplace(input){
+	input.value = input.value.replace(/\D/g, "");
 }
 
+function validaNumero(input){
+	if(validaInput(input, /\d/g)){
+		input.classList.remove("is-invalid");
+		return true;
+	} else {
+		input.classList.add("is-invalid");
+		document.getElementById("numeroFeedback").innerText = "Número está vazio!";
+	}
+}
 
 //verifica se o input esta vazio e compara com a regexp
 function validaInput(input, padrao){
@@ -165,11 +191,70 @@ function validaInput(input, padrao){
 	}
 }
 
+function verificaInputs(){
+	const inputs = document.getElementsByTagName("input");
+	let ok = false;
 
+	//verifica todos inputs
+	if(validaNome(inputs[0], 0)){
+		ok = true;
+	} else { ok = false; }
+	if(validaNome(inputs[1], 1)){
+		ok = true;
+	} else { ok = false; }
+	if(validaEmail(inputs[2])){
+		ok = true;
+	} else { ok = false; }
+	if(validaCpf(inputs[3])){
+		ok = true;
+	} else { ok = false; }
+	if(validaTelefone(inputs[4], 0)){
+		ok = true;
+	} else { ok = false; }
+	if(validaTelefone(inputs[5], 1)){
+		ok = true;
+	} else { ok = false; }
+	if(cepInvalido(inputs[6])){
+		ok = true;
+	} else { ok = false; }
+	if(inputs[7].value == ""){
+		ok = false;
+	} else { ok = true; }
+	if(validaNumero(inputs[8])){
+		ok = true;
+	} else { ok = false; }
 
-function salvar(){
-	
+	return ok;
 }
 
+
 localStorage.clear();
-//localStorage.setItem(("id"+localStorage.length), "ruatop");
+
+//salva os dados no localStorage
+function salvar(){
+	if(verificaInputs()){
+		console.log("Nice!");
+
+		let ID = localStorage.length;
+		const inputs = document.getElementsByTagName("input");
+
+		let dados = {
+			ID: ID,
+			nome: inputs[0].value,
+			sobrenome: inputs[1].value,
+			email: inputs[2].value,
+			cpf: inputs[3].value,
+			telefone: inputs[4].value,
+			celular: inputs[5].value,
+			cep: inputs[6].value,
+			rua: inputs[7].value,
+			numero: inputs[8].value,
+			bairro: inputs[9].value,
+			cidade: inputs[10].value,
+			uf: inputs[11].value
+		};
+		
+		localStorage.setItem(`ID ${ID}`, JSON.stringify(dados));
+		console.log(localStorage);
+	}
+}

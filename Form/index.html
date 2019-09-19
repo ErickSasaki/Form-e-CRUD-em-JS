@@ -45,6 +45,7 @@
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
             <input class="form-control" id="inputCpf" maxlength="18" placeholder="123456789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this)" onblur="validaCpf(this)">
+            <div id="cpfFeedback" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row">
@@ -71,13 +72,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-md-10">
+          <div class="form-group col-md-9">
             <label for="inputRua">Rua</label>
             <input class="form-control" id="inputRua" readonly>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label for="inputNumero">Número</label>
-            <input class="form-control" id="inputNumero">
+            <input class="form-control" id="inputNumero" onkeyup="numeroReplace(this)" onblur="validaNumero(this)">
+            <div id="numeroFeedback" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row">
@@ -102,7 +104,7 @@
             <button type="button" id="btnEditar" class="btn btn-primary btn-block">Editar</button>
           </div>
           <div class="col-sm-4">
-            <button type="button" id="btnSalvar" class="btn btn-success btn-block">Salvar</button>
+            <button type="button" id="btnSalvar" class="btn btn-success btn-block" onclick="salvar()">Salvar</button>
           </div>
         </div>
         <div class="row divTable">
