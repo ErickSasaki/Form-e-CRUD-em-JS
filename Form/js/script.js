@@ -275,7 +275,6 @@ function excluir(){
 
 	id = colunas[0].innerText;
 	localStorage.setItem(`ID ${id}`, "null");
-	console.log(localStorage);
 
 	atualizaTabela();
 }
@@ -296,14 +295,13 @@ function editar(){
 
 //salva os dados no localStorage
 function salvar(){
-	//if(verificaInputs()){
-		console.log("Nice!");
+	if(verificaInputs()){
 		let ID;
 
 		if(editando == true){
 			let linha = document.getElementsByClassName("table-primary");
 			ID = linha[0].children[0].innerText;
-			console.log(ID);
+			editando = false;
 		} else {
 			ID = localStorage.length;
 		}
@@ -333,7 +331,7 @@ function salvar(){
 		}
 
 		atualizaTabela();
-	//}
+	}
 }
 
 window.onload = function() {

@@ -22,14 +22,14 @@
             <div class="form-group">
               <label for="inputNome">Nome</label>
               <input class="form-control" id="inputNome" onkeyup="nomeReplace(this)" onblur="validaNome(this, 0)">
-              <div class="invalid-feedback nomeFeedback"></div>
+              <div class="invalid-feedback d-block nomeFeedback"></div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="inputSobrenome">Sobrenome</label>
               <input class="form-control" id="inputSobrenome" onblur="validaNome(this, 1)">
-              <div class="invalid-feedback nomeFeedback"></div>
+              <div class="invalid-feedback d-block nomeFeedback"></div>
             </div>
           </div>
         </div>
@@ -38,13 +38,13 @@
             <div class="form-group">
               <label for="inputEmail">Email</label>
               <input class="form-control" id="inputEmail" onblur="validaEmail(this)">
-              <div id="emailFeedback" class="invalid-feedback"></div>
+              <div id="emailFeedback" class="invalid-feedback d-block"></div>
             </div>
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
             <input class="form-control" id="inputCpf" maxlength="18" placeholder="123456789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this)" onblur="validaCpf(this)">
-            <div id="cpfFeedback" class="invalid-feedback"></div>
+            <div id="cpfFeedback" class="invalid-feedback d-block"></div>
           </div>
         </div>
         <div class="row">
@@ -52,21 +52,21 @@
             <div class="form-group">
               <label for="inputTelefone">Telefone</label>
               <input class="form-control" id="inputTelefone" maxlength="13" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, event, 4)" onblur="validaTelefone(this, 0)">
-              <div class="invalid-feedback telefoneFeedback"></div>
+              <div class="invalid-feedback telefoneFeedback d-block"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputCelular">Celular</label>
               <input class="form-control" id="inputCelular" maxlength="14" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, event, 5)" onblur="validaTelefone(this, 1)">
-              <div class="invalid-feedback telefoneFeedback"></div>
+              <div class="invalid-feedback telefoneFeedback d-block"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputCep">Cep</label>
               <input class="form-control" id="inputCep" maxlength="9" onkeypress="mascaraCep(this)" onkeyup="pegaEndereco(this)" onblur="cepInvalido(this)" placeholder="ex: 12345-678">
-              <div id="cepFeedback" class="invalid-feedback"></div>
+              <div id="cepFeedback" class="invalid-feedback d-block"></div>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@
           <div class="col-md-3">
             <label for="inputNumero">Número</label>
             <input class="form-control" id="inputNumero" maxlength="5" onkeyup="numeroReplace(this)" onblur="validaNumero(this)">
-            <div id="numeroFeedback" class="invalid-feedback"></div>
+            <div id="numeroFeedback" class="invalid-feedback d-block"></div>
           </div>
         </div>
         <div class="row">
