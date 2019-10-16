@@ -1,3 +1,6 @@
+//variaveis de validação
+let nome = false, sobrenome = false, email = false, cpf = false, telefone = false, celular = false, cep = false, numero = false;
+
 //pega o endereço usando o CEP
 function pegaEndereco(inputCep){
 	var valorCep = inputCep.value.replace("-", "");
@@ -14,13 +17,16 @@ function pegaEndereco(inputCep){
 			if(this.readyState == 4 && this.status == 200){
 				let resp = JSON.parse(this.response);
 				var cepFeedback = document.getElementById("cepFeedback");
+				cepFeedback.innerText = "";
 
 				if(resp.logradouro == undefined){
 					inputCep.classList.add("is-invalid");
 					cepFeedback.innerText = "Cep invalido!";
+					cep = false;
 					limpaInput();
 				} else {
 					inputCep.classList.remove("is-invalid");
+					cep = true;
 					populaInput(resp);
 				}			
 			}
@@ -37,10 +43,12 @@ function cepInvalido(input){
 	let padraoCep = /\d{5}-\d{3}/;
 
 	if(validaInput(input, padraoCep)){
+		cepFeedback.innerText = "";
 		return true;
 	} else {
 		inputCep.classList.add("is-invalid");
 		cepFeedback.innerText = "Cep vazio ou incompleto!";
+		cep = false;
 		limpaInput();
 	}
 }
@@ -70,21 +78,31 @@ function validaCep(valorCep){
 
 //verifica se o Nome está vazio ou contém caracteres especiais
 function validaNome(input, feedback){
-	let nome = input.value;
-	let padraoNome = /[a-zà-ú]/gi;
+	let padraoNome = /[\D]{3}?/g;
 	const nomeFeedback = document.getElementsByClassName("nomeFeedback");
 
 	if(validaInput(input, padraoNome)){
 		input.classList.remove("is-invalid");
+		nomeFeedback[feedback].innerText = "";
+		if(feedback == 0){
+			nome = true;
+		} else {
+			sobrenome = true;
+		}
 		return true;
 	} else {
 		input.classList.add("is-invalid");
-		nomeFeedback[feedback].innerText = "Nome está vazio ou contém caracteres especiais";
+		nomeFeedback[feedback].innerText = "Nome deve ter no mínimo três caracteres!";
+		if(feedback == 0){
+			nome = false;
+		} else {
+			sobrenome = false;
+		}
 	}
 }
 
 function nomeReplace(input){
-	input.value = input.value.replace(/[^a-zà-ú ]/gi, "");
+	input.value = input.value.replace(/[\d]/g, "");
 }
 
 function validaEmail(input){
@@ -92,10 +110,13 @@ function validaEmail(input){
 
 	if(validaInput(input, padraoEmail)){
 		input.classList.remove("is-invalid");
+		document.getElementById("emailFeedback").innerText = "";
+		email = true;
 		return true;
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementById("emailFeedback").innerText = "Email está vazio ou não corresponde ao formato de email";
+		email = false;
 	}
 }
 
@@ -130,10 +151,13 @@ function validaCpf(input){
 	}
 	if(validaInput(input, padraoCpfCnpj)){
 		input.classList.remove("is-invalid");
+		document.getElementById("cpfFeedback").innerText = "";
+		cpf = true;
 		return true;
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementById("cpfFeedback").innerText = "CPF/CNPJ está vazio ou incompleto!";
+		cpf = false;
 	}
 }
 
@@ -163,10 +187,21 @@ function validaTelefone(input, feedback){
 
 	if(validaInput(input, padraoTelefone)){
 		input.classList.remove("is-invalid");
+		document.getElementsByClassName("telefoneFeedback")[feedback].innerText = "";
+		if(feedback == 0){
+			telefone = true;
+		} else {
+			celular = true;
+		}
 		return true;
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementsByClassName("telefoneFeedback")[feedback].innerText = "Telefone está vazio ou incompleto!";
+		if(feedback == 0){
+			telefone = false;
+		} else {
+			celular = false;
+		}
 	}
 }
 
@@ -177,10 +212,13 @@ function numeroReplace(input){
 function validaNumero(input){
 	if(validaInput(input, /\d/g)){
 		input.classList.remove("is-invalid");
+		document.getElementById("numeroFeedback").innerText = "";
+		numero = true;
 		return true;
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementById("numeroFeedback").innerText = "Número está vazio!";
+		numero = false;
 	}
 }
 
@@ -192,45 +230,49 @@ function validaInput(input, padrao){
 }
 
 function verificaInputs(){
+	const btnSalvar = document.getElementById("btnSalvar");
 	const inputs = document.getElementsByTagName("input");
-	let ok = false;
 
+	console.log(nome, sobrenome, email, cpf, telefone, celular, cep, numero);
 	//verifica todos inputs
-	if(validaNome(inputs[0], 0)){
-		ok = true;
-	} else { ok = false; }
-	if(validaNome(inputs[1], 1)){
-		ok = true;
-	} else { ok = false; }
-	if(validaEmail(inputs[2])){
-		ok = true;
-	} else { ok = false; }
-	if(validaCpf(inputs[3])){
-		ok = true;
-	} else { ok = false; }
-	if(validaTelefone(inputs[4], 0)){
-		ok = true;
-	} else { ok = false; }
-	if(validaTelefone(inputs[5], 1)){
-		ok = true;
-	} else { ok = false; }
-	if(cepInvalido(inputs[6])){
-		ok = true;
-	} else { ok = false; }
-	if(inputs[7].value == ""){
-		ok = false;
-	} else { ok = true; }
-	if(validaNumero(inputs[8])){
-		ok = true;
-	} else { ok = false; }
+	if(nome == false){
+		return false;
+	}
+	if(sobrenome == false){
+		return false;
+	}
+	if(email == false){
+		return false;
+	}
+	if(cpf == false){
+		return false;
+	}
+	if(telefone == false){
+		return false;
+	}
+	if(celular == false){
+		return false;
+	}
+	if(cep == false){
+		return false;
+	}
+	if(numero == false){
+		return false;
+	}
 
-	return ok;
+	btnSalvar.removeAttribute("hidden");
+	return true;
 }
 
 //apaga toda a tabela, e coloca de volta voltando os dados armazenados.
 function atualizaTabela(){
-	let listaDados = document.getElementById("listaDados");
+	console.log(localStorage);
+	const listaDados = document.getElementById("listaDados");
+	const tblDados = document.getElementById("tblDados");
+
 	listaDados.innerHTML = "";
+	let ok = false;
+
 	for(i = 0; i < localStorage.length; i++){
 		let dados = JSON.parse(localStorage.getItem(`ID ${i}`));
 
@@ -247,6 +289,7 @@ function atualizaTabela(){
 		});
 
 		if(dados != null){
+			ok = true;
 			criaTd(dados.ID, tr);
 			criaTd(dados.nome, tr);
 			criaTd(dados.sobrenome, tr);
@@ -257,7 +300,19 @@ function atualizaTabela(){
 			criaTd(dados.cep, tr);
 			criaTd(dados.numero, tr);
 		}
-		
+	}
+
+	const btnExcluir = document.getElementById("btnExcluir");
+	const btnEditar = document.getElementById("btnEditar");
+
+	if(ok == false){
+		tblDados.setAttribute("hidden", "true");
+		btnEditar.setAttribute("disabled", "true");
+		btnExcluir.setAttribute("disabled", "true");
+	} else {
+		tblDados.removeAttribute("hidden");
+		btnEditar.removeAttribute("disabled");
+		btnExcluir.removeAttribute("disabled");
 	}
 }
 
@@ -295,6 +350,7 @@ function editar(){
 
 //salva os dados no localStorage
 function salvar(){
+	const btnSalvar = document.getElementById("btnSalvar");
 	if(verificaInputs()){
 		let ID;
 
@@ -325,12 +381,15 @@ function salvar(){
 		};
 		
 		localStorage.setItem(`ID ${ID}`, JSON.stringify(dados));
-
+		
 		for(i in inputs){
 			inputs[i].value = "";
 		}
-
+		btnSalvar.setAttribute("hidden", "true");
 		atualizaTabela();
+
+		//reseta as variaveis de validação
+		nome = false, sobrenome = false, email = false, cpf = false, telefone = false, celular = false, cep = false, numero = false;
 	}
 }
 

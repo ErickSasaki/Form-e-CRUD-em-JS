@@ -43,7 +43,7 @@
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
-            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123456789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this)" onblur="validaCpf(this)">
+            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123.456.789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this)" onblur="validaCpf(this)">
             <div id="cpfFeedback" class="invalid-feedback d-block"></div>
           </div>
         </div>
@@ -107,7 +107,7 @@
           </div>
         </div>
       </div>
-      <div class="row divTable">
+      <div id="tblDados" class="row divTable">
           <table class="table table-sm table-bordered table-hover">
             <thead>
               <tr>
