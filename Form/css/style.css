@@ -13,6 +13,8 @@ footer{
 	text-align: center;
 }
 .divButton{
+	height: 38px;
+	text-align: center;;
 	margin-top: 10px;
 }
 .divTable{
@@ -20,4 +22,15 @@ footer{
 }
 .invalid-feedback{
 	height: 13px;
+}
+#loading{
+	margin: 0px;
+	width: 30px;
+	float: right;
+	position: relative;
+	bottom: 33px;
+	left: 17px;
+}
+.btn{
+	width: 200px;
 }

@@ -43,7 +43,7 @@
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
-            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123456789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this)" onblur="validaCpf(this)">
+            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123.456.789-10" onkeyup="replaceCpf(this), mascaraCpf(this)" onblur="validaCpf(this)">
             <div id="cpfFeedback" class="invalid-feedback d-block"></div>
           </div>
         </div>
@@ -97,17 +97,18 @@
         </div>
         <div class="row divButton">
           <div class="col-sm-4">
-            <button type="button" id="btnExcluir" class="btn btn-danger btn-block" onclick="excluir()">Excluir</button>
+            <button type="button" id="btnExcluir" class="btn btn-danger" onclick="excluir()">Excluir</button>
           </div>
           <div class="col-sm-4">
-            <button type="button" id="btnEditar" class="btn btn-primary btn-block" onclick="editar()">Editar</button>
+            <button type="button" id="btnEditar" class="btn btn-primary" onclick="editar()">Editar</button>
           </div>
           <div class="col-sm-4">
-            <button type="button" id="btnSalvar" class="btn btn-success btn-block" onclick="salvar()">Salvar</button>
+            <button type="button" id="btnSalvar" class="btn btn-success" disabled onclick="salvar()">Salvar</button>
+            <img hidden id="loading" src="loading.gif">
           </div>
         </div>
       </div>
-      <div class="row divTable">
+      <div id="tblDados" class="row divTable">
           <table class="table table-sm table-bordered table-hover">
             <thead>
               <tr>
