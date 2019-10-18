@@ -43,7 +43,7 @@
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
-            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123.456.789-10" onkeyup="mascaraCpf(this, event), replaceCpf(this)" onblur="validaCpf(this)">
+            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123.456.789-10" onkeyup="replaceCpf(this)" onkeypress="mascaraCpf(this, event)" onblur="validaCpf(this)">
             <div id="cpfFeedback" class="invalid-feedback d-block"></div>
           </div>
         </div>
@@ -121,7 +121,7 @@
                 <th>Celular</th>
                 <th>Cep</th>
                 <th>Numero</th>
-                <th><input id="chkAll" type="checkbox"></th>
+                <th><input onclick="selectAll(this)" id="chkAll" type="checkbox"></th>
               </tr>
             </thead>
             <tbody id="listaDados">
