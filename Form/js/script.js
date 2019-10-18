@@ -120,30 +120,29 @@ function validaEmail(input){
 	}
 }
 
-function mascaraCpf(input){
+function mascaraCpf(input, event){
 	let valor = input.value;
-	let cpf = valor.replace(/[.-]/g, "");
+	let cpf = valor.replace(/[.\-\/]/g, "");
+	let key = event.keyCode;
 	
-	
-	if(cpf.length == 3){
-		valor = cpf.replace(/(\d{3})/, "$1.");
+
+	if(key != 8){
+		if(cpf.length == 3){
+			valor = cpf.replace(/(\d{3})/, "$1.");
+		}
+		else if(cpf.length == 6){
+			valor = cpf.replace(/(\d{3})(\d{3})/, "$1.$2.");
+		}
+		else if(cpf.length == 9){
+			valor = cpf.replace(/(\d{3})(\d{3})(\d{3})/, "$1.$2.$3-");
+		}
+		else if(cpf.length == 11){
+			valor = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+		}
+		else if(cpf.length == 12){
+			valor = cpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/, "$1.$2.$3/$4-");
+		}
 	}
-	if(cpf.length == 6){
-		valor = cpf.replace(/(\d{3})(\d{3})/, "$1.$2");
-	}
-	
-	console.log(`cpf: ${cpf} --- valor: ${valor}`);
-	//mascara CPF / CNPJ
-	/*if(valor.length < 14){
-		valor = valor.replace(/^(\d{3})(?!\.)/, "$1.");
-		valor = valor.replace(/^(\d{3})\.(\d{3})(?!\.)/, "$1.$2.");
-		valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(?!\-)/, "$1.$2.$3-");
-	} else if (valor.length == 14){
-		let cnpj = valor.replace(/[\.-]/g, "");
-		valor = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(?!\/)/, "$1.$2.$3/");
-	} else{
-		valor = valor.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(?!-)/, "$1.$2.$3/$4-");
-	} */
 
 	input.value = valor;
 }
@@ -154,38 +153,36 @@ function replaceCpf(input){
 
 function validaCpf(input){
 	let padraoCpfCnpj;
-	if(input.value.length <= 14){
-		padraoCpfCnpj = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
-	} else {
-		padraoCpfCnpj = /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/;
-	}
-	if(validaInput(input, padraoCpfCnpj)){
-		input.classList.remove("is-invalid");
-		document.getElementById("cpfFeedback").innerText = "";
-		cpf = true;
-		return true;
-	} else {
-		input.classList.add("is-invalid");
-		document.getElementById("cpfFeedback").innerText = "CPF/CNPJ está vazio ou incompleto!";
-		cpf = false;
-	}
+		if(input.value.length <= 14){
+			padraoCpfCnpj = /\d{3}\.\d{3}\.\d{3}-\d{2}/;
+		} else {
+			padraoCpfCnpj = /\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/;
+		}
+		if(validaInput(input, padraoCpfCnpj)){
+			input.classList.remove("is-invalid");
+			document.getElementById("cpfFeedback").innerText = "";
+			cpf = true;
+			return true;
+		} else {
+			input.classList.add("is-invalid");
+			document.getElementById("cpfFeedback").innerText = "CPF/CNPJ está vazio ou incompleto!";
+			cpf = false;
+		}		
 }
 
 //Telefone
-function mascaraTelefone(input, event, digit){
+function mascaraTelefone(input, digit){
 	let key = event.keyCode;
 	let telefone = input.value.replace(/[\(\)-]/g, "");
 
-	if(key != 8){
-		telefone = telefone.replace(/^(\d{2})/, "($1)");
-		if(digit == 4){
-			telefone = telefone.replace(/(\d{4})/, "$1-");
-		} else {
-			telefone = telefone.replace(/(\d{5})/, "$1-");
-		}
-		 
-		input.value = telefone;
+	telefone = telefone.replace(/^(\d{2})/, "($1)");
+	if(digit == 4){
+		telefone = telefone.replace(/(\d{4})/, "$1-");
+	} else {
+		telefone = telefone.replace(/(\d{5})/, "$1-");
 	}
+		 
+	input.value = telefone;
 }
 
 function telefoneReplace(input){
@@ -225,6 +222,7 @@ function validaNumero(input){
 		document.getElementById("numeroFeedback").innerText = "";
 		numero = true;
 		return true;
+
 	} else {
 		input.classList.add("is-invalid");
 		document.getElementById("numeroFeedback").innerText = "Número está vazio!";
@@ -247,7 +245,6 @@ function verificaInputs(){
 	let ok = true;
 	const btnSalvar = document.getElementById("btnSalvar");
 
-	console.log(nome, sobrenome, email, cpf, telefone, celular, cep, numero);
 	//verifica todos inputs
 	if(nome == false){
 		ok = false;
@@ -284,7 +281,6 @@ function verificaInputs(){
 
 //apaga toda a tabela, e coloca de volta voltando os dados armazenados.
 function atualizaTabela(){
-	console.log(localStorage);
 	const listaDados = document.getElementById("listaDados");
 	const tblDados = document.getElementById("tblDados");
 

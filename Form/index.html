@@ -43,7 +43,7 @@
           </div>
           <div class="col-md-5">
             <label for="inputCpf">CPF/CNPJ</label>
-            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123.456.789-10" onkeyup="replaceCpf(this), mascaraCpf(this)" onblur="validaCpf(this)">
+            <input class="form-control" id="inputCpf" maxlength="18" placeholder="123.456.789-10" onkeyup="mascaraCpf(this, event), replaceCpf(this)" onblur="validaCpf(this)">
             <div id="cpfFeedback" class="invalid-feedback d-block"></div>
           </div>
         </div>
@@ -51,14 +51,14 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputTelefone">Telefone</label>
-              <input class="form-control" id="inputTelefone" maxlength="13" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, event, 4)" onblur="validaTelefone(this, 0)">
+              <input class="form-control" id="inputTelefone" maxlength="13" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, 4)" onblur="validaTelefone(this, 0)">
               <div class="invalid-feedback telefoneFeedback d-block"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="inputCelular">Celular</label>
-              <input class="form-control" id="inputCelular" maxlength="14" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, event, 5)" onblur="validaTelefone(this, 1)">
+              <input class="form-control" id="inputCelular" maxlength="14" onkeyup="telefoneReplace(this)" onkeypress="mascaraTelefone(this, 5)" onblur="validaTelefone(this, 1)">
               <div class="invalid-feedback telefoneFeedback d-block"></div>
             </div>
           </div>
@@ -121,6 +121,7 @@
                 <th>Celular</th>
                 <th>Cep</th>
                 <th>Numero</th>
+                <th><input id="chkAll" type="checkbox"></th>
               </tr>
             </thead>
             <tbody id="listaDados">
